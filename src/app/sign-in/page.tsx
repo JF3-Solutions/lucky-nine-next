@@ -1,9 +1,11 @@
+import LoginForm from './component/LoginForm';
 
-const SignIn=() => {
-    return (
-        <>
-            <h1>Iniciar sesion</h1>
-        </>
-    );
-}
-export default SignIn
+const SignInPage = () => {
+  return (
+    <main>
+      <h1>Iniciar sesion</h1>
+      <LoginForm />
+    </main>
+  );
+};
+export default SignInPage;
