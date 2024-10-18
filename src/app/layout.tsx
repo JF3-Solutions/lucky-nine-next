@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
-import './globals.css';
 import GlobalHeader from '@/components/GlobalHeader/GlobalHeader';
+import './globals.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,6 +17,12 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`antialiased`}>
+        <ToastContainer
+          theme='colored'
+          draggable
+          className='md:w-[600px]'
+          containerId='globalToastify'
+        />
         <GlobalHeader />
 
         {children}

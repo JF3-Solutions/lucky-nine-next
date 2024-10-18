@@ -1,73 +1,21 @@
 'use client';
-import {isEmailValid} from '@/utilities/validation';
+import { isEmailValid } from '@/utilities/validation';
 import InputText from '@/components/InputText/InputText';
-import {useEmptyInput} from '@/hooks/useEmptyInput';
-import {ChangeEvent,FormEvent,useState} from 'react';
-import {AxiosError} from 'axios';
-import {login} from '../services/login';
-import {MdOutlineEmail} from 'react-icons/md';
-import Button from '@/components/Button';
 
-interface LoginForm {
-  email: string;
-  password: string;
-}
+import { MdOutlineEmail } from 'react-icons/md';
+import PrimaryButton from '@/components/PrimaryButton/PrimaryButton';
+import InputPassword from '@/components/InputPassword/InputPassword';
+import { useLoginForm } from '../hooks/useLoginForm';
 
-const LoginForm=() => {
-  const [formData,setFormData]=useState<LoginForm>({
-    email: '',
-    password: '',
-  });
-  const [buttonLoading,setButtonLoading]=useState<boolean>(false);
-  const emptyEmail=useEmptyInput(formData.email);
-
-  // Función para controlar los valores de los inputs
-  const handleChange=(e: ChangeEvent<HTMLInputElement>) => {
-    const {name,value}=e.target;
-
-    // *--------------* //
-    // Prevalidaciones //
-    // *------------* //
-
-    // *-----* //
-    // Correo //
-    // *---* //
-    if(name==='email') {
-      if(value.length>250) {
-        return;
-      }
-    }
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit=async (e: FormEvent) => {
-    e.preventDefault();
-    // Se activa el loading del boton
-    setButtonLoading(true);
-
-    // Como ya tenemos instanciada la petición, la llamamos directamente
-    await login(formData.email,formData.password)
-      .then((res) => {
-        // Manejar la respuesta correcta
-        console.log(res);
-      })
-      .catch((error: AxiosError) => {
-        // Manejar el error
-        console.log(error);
-        if(error.status===401) {
-          // Redireccionar a la vista de verify (usuario no verificado)
-          console.log('Redireccionar');
-        } else {
-          // Mostrar toast con el mensaje de error.
-          console.log('Mostrar toast');
-        }
-      })
-      .finally(() => setButtonLoading(false));
-  };
+const LoginForm = () => {
+  const {
+    formData,
+    buttonLoading,
+    emptyEmail,
+    emptyPassword,
+    handleChange,
+    handleSubmit,
+  } = useLoginForm();
 
   return (
     <form
@@ -83,18 +31,29 @@ const LoginForm=() => {
         required={true}
         label='Correo electronico'
         error={
-          emptyEmail||
-            (formData.email.length>0&&!isEmailValid(formData.email))
+          emptyEmail ||
+          (formData.email.length > 0 && !isEmailValid(formData.email))
             ? true
-            :false
+            : false
         }
         icon={<MdOutlineEmail className='w-[30px] h-[30px]' />}
       />
 
-      <div>
-        <input className='border solid border-red-500' type='password' name='password' onChange={handleChange} />
-      </div>
-      <Button type='submit'>{buttonLoading? 'Cargando..':'Enviar'}</Button>
+      <InputPassword
+        value={formData.password}
+        handleChange={handleChange}
+        label='Contraseña'
+        name='password'
+        error={emptyPassword}
+        required={true}
+      />
+
+      <PrimaryButton
+        label='Enviar'
+        type='submit'
+        loading={buttonLoading}
+        className='w-[50%]'
+      />
     </form>
   );
 };

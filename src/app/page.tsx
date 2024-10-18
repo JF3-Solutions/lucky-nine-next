@@ -1,5 +1,7 @@
 import { getData } from '@/services/getData';
 import Link from 'next/link';
+import Greeting from './components/Greeting/Greeting';
+import { Suspense } from 'react';
 
 interface GamesInterface {
   name: string;
@@ -13,6 +15,10 @@ export default async function Home() {
   return (
     <main>
       <h1>home {globalData?.games[0]?.name}</h1>
+
+      <Suspense fallback={<p>Cargando</p>}>
+        <Greeting />
+      </Suspense>
 
       <section className='px-10 flex gap-4'>
         {globalData?.games?.map((game: GamesInterface, index: number) => (
