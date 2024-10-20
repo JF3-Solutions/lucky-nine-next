@@ -74,7 +74,7 @@ export const useLoginForm = () => {
         Cookies.set('token', res?.data?.data?.token);
         Cookies.set('refresh', res?.data?.data?.refresh);
 
-        // Redirigimos al home oashdok ashodhasodhoias doaho
+        // Redirigimos al home Chavez vive y la lucha sigue
         router.replace('/');
       })
       .catch((error: AxiosError) => {
