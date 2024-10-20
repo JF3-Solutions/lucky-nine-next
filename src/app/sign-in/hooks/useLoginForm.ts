@@ -74,7 +74,7 @@ export const useLoginForm = () => {
         Cookies.set('token', res?.data?.data?.token);
         Cookies.set('refresh', res?.data?.data?.refresh);
 
-        // Redirigimos al home
+        // Redirigimos al home oashdok ashodhasodhoias doaho
         router.replace('/');
       })
       .catch((error: AxiosError) => {
