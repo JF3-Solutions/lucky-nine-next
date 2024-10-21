@@ -16,14 +16,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`antialiased bg-[#0a0a0a]`}>
+      <body className={`antialiased`}>
         <ToastContainer
           theme='colored'
           draggable
           className='md:w-[600px]'
           containerId='globalToastify'
         />
-        <GlobalHeader />
+        <GlobalHeader showBackButton={true} />
 
         {children}
       </body>
