@@ -1,3 +1,4 @@
+"use client"
 import {FC,useState,useEffect,useCallback} from 'react';
 import {FaArrowLeft} from 'react-icons/fa';
 import {RxHamburgerMenu} from 'react-icons/rx';
@@ -11,8 +12,7 @@ import ButtonNav from './ButtonNav';
 
 const NavBar: FC<{showBackButton?: boolean}>=({showBackButton}) => {
     const [isMenuOpen,setIsMenuOpen]=useState(false);
-    const pathname=usePathname(); // Usamos usePathname para obtener la ruta actual
-
+    const pathname: string=usePathname(); // Usamos usePathname para obtener la ruta actual
     // Simular los valores de autenticación
     const isAuthenticated=false; // Simula si el usuario está autenticado o no
     const loading=false; // Simula el estado de carga

@@ -1,4 +1,3 @@
-"use client"
 import NavBar from './Navbar';
 
 const GlobalHeader=({showBackButton}: {showBackButton: boolean|undefined}) => {
