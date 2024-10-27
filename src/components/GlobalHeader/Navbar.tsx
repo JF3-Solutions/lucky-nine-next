@@ -6,7 +6,7 @@ import {IoClose} from 'react-icons/io5';
 import {usePathname} from 'next/navigation';
 import Link from 'next/link';
 import Logo from '../Logo/Logo';
-import Balance from './balance';
+import Balance from './Balance';
 import ItemsMenu from './ItemsMenu';
 import ButtonNav from './ButtonNav';
 

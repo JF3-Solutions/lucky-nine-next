@@ -6,7 +6,7 @@ interface InputProps {
   label: string;
   type: string;
   name: string;
-  error: boolean;
+  error?: boolean;
   required?: boolean;
   icon?: ReactNode;
 }

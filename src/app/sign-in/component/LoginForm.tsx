@@ -1,7 +1,6 @@
 'use client';
 import {isEmailValid} from '@/utilities/validation';
 import InputText from '@/components/InputText/InputText';
-
 import {MdOutlineEmail} from 'react-icons/md';
 import PrimaryButton from '@/components/PrimaryButton/PrimaryButton';
 import InputPassword from '@/components/InputPassword/InputPassword';
