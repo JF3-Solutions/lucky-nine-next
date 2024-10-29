@@ -1,28 +1,29 @@
-"use client"
+'use client';
 import InputText from "@/components/InputText/InputText";
 import PrimaryButton from "@/components/PrimaryButton/PrimaryButton";
-import InputPassword from "@/components/InputPassword/InputPassword"; // Asegúrate de tener este componente
-import {useRegisterForm} from "../hooks/useRegisterForm"; // Importa tu hook personalizado
+import InputPassword from "@/components/InputPassword/InputPassword";
+import {useRegisterForm} from "../hooks/useRegisterForm";
+import {isEmailValid} from "@/utilities/validation";
 
 const SignIn=() => {
     const {
         formData,
         buttonLoading,
         emptyEmail,
-        emptyPassword,
         passwordErrors,
         handleChange,
         handleSubmit,
-    }=useRegisterForm(); // Usa el hook
+    }=useRegisterForm();
+    console.log('Aqui enviamos los formularios :',useRegisterForm(),handleSubmit)
 
     return (
         <>
             <form
-                action=""
-                onSubmit={handleSubmit} // Manejador de envío
+                onSubmit={handleSubmit}
                 className="flex-1 flex flex-col w-full items-center md:max-w-[425px] px-6 py-6 justify-between md:gap-12"
             >
                 <div className="flex flex-col gap-4 md:mb-4 w-full md:max-w-[425px]">
+
                     {/* Campo de Nombre */}
                     <InputText
                         value={formData.name}
@@ -43,6 +44,26 @@ const SignIn=() => {
                         label="Apellido"
                     />
 
+                    {/* Campo de Username */}
+                    <InputText
+                        value={formData.username}
+                        handleChange={handleChange}
+                        type="text"
+                        name="username"
+                        required={true}
+                        label="Username"
+                    />
+
+                    {/* Campo de Cedula de identidad */}
+                    <InputText
+                        value={formData.cedula}
+                        handleChange={handleChange}
+                        type="text"
+                        name="cedula"
+                        label="Cedula"
+                        required={true}
+                    />
+
                     {/* Campo de Correo Electrónico */}
                     <InputText
                         value={formData.email}
@@ -60,7 +81,7 @@ const SignIn=() => {
                         handleChange={handleChange}
                         label="Contraseña"
                         name="password"
-                        error={passwordErrors?.lengthError||passwordErrors?.uppercaseError||passwordErrors?.numberError||passwordErrors?.symbolError}
+                        error={passwordErrors?.lengthError}
                         required={true}
                     />
 

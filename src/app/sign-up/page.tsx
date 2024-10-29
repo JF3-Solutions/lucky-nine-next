@@ -14,7 +14,6 @@ const SignIn=() => {
                 containerId='registerToastify'
             />
             <LuckyInfo />
-            //Form section//
             <section>
                 <PrimaryTitle title={"Registrar Cuenta"} />
                 <RegisterForm />

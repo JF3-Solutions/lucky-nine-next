@@ -1,7 +1,7 @@
-import { ROLES } from '@/models/Roles.enum';
-import { UsersInterface } from '@/models/User.interface';
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import {ROLES} from '@/models/Roles.enum';
+import {UsersInterface} from '@/models/User.interface';
+import {create} from 'zustand';
+import {persist} from 'zustand/middleware';
 
 // Define una interfaz para el estado
 interface UsersInterfaceGlobalState extends UsersInterface {
@@ -9,7 +9,7 @@ interface UsersInterfaceGlobalState extends UsersInterface {
 }
 
 // Usa el tipo en el store
-export const useUserInfoStore = create<UsersInterfaceGlobalState>()(
+export const useUserInfoStore=create<UsersInterfaceGlobalState>()(
   persist(
     (set) => ({
       // Estado inicial
@@ -17,6 +17,7 @@ export const useUserInfoStore = create<UsersInterfaceGlobalState>()(
       email: '',
       username: '',
       lastName: '',
+      password: '',
       role: ROLES.USER,
       verified: false,
       cedula: '',
@@ -30,6 +31,7 @@ export const useUserInfoStore = create<UsersInterfaceGlobalState>()(
           email: userInfo.email,
           username: userInfo.username,
           lastName: userInfo.lastName,
+          password: userInfo.password,
           role: userInfo.role,
           verified: userInfo.verified,
           cedula: userInfo.cedula,

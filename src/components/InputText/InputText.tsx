@@ -20,7 +20,7 @@ const InputText: FC<InputProps>=({
   required=false,
   icon,
   error,
-}) => {
+}: InputProps) => {
   return (
     <div className='relative w-full'>
       {icon? <div className='absolute right-3 top-3 text-blue-800'>{icon}</div>:null}

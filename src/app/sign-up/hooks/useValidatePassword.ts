@@ -20,7 +20,7 @@ export const useValidatePassword=(password: string,confirmPassword: string) => {
             lowercaseError: !/[a-z]/.test(password),
             numberError: !/\d/.test(password),
             symbolError: !/[!@#$%^&*(),.?":{}|<>]/.test(password),
-            matchError: password!==confirmPassword,
+            matchError: password===confirmPassword,
         };
 
         setPasswordErrors(errors);

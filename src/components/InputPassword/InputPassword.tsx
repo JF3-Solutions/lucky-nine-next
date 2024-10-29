@@ -9,7 +9,7 @@ interface InputProps {
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   label: string;
   name: string;
-  error: boolean;
+  error: boolean|undefined;
   requeriments?: boolean;
   firstInput?: boolean;
   required?: boolean;
@@ -32,9 +32,9 @@ const InputPassword: FC<InputProps>=({
 }) => {
   const [showPassword,setShowPassword]=useState<boolean>(false);
 
-  const hasUpperCase=/[A-Z]/.test(value);
-  const hasNumber=/[0-9]/.test(value);
-  const hasMinLength=value.length>=8;
+  const hasUpperCase: boolean=/[A-Z]/.test(value);
+  const hasNumber: boolean=/[0-9]/.test(value);
+  const hasMinLength: boolean=value.length>=8;
 
   return (
     <div className='relative w-full transition-all'>
@@ -57,7 +57,7 @@ const InputPassword: FC<InputProps>=({
       />
       <button
         type='button'
-        onClick={() => setShowPassword(!showPassword)}
+        onClick={(): void => setShowPassword(!showPassword)}
         className='absolute right-3 top-3'
       >
         {showPassword? (
