@@ -15,7 +15,7 @@ interface LoginForm {
 
 export const useLoginForm = () => {
   // Stores
-  const { setUserInfo } = useUserInfoStore();
+  const { setUserInfo, login: loginUI } = useUserInfoStore();
 
   // States
   const [formData, setFormData] = useState<LoginForm>({
@@ -67,15 +67,15 @@ export const useLoginForm = () => {
         const adaptedData = setUserInfoAdapter(res.data.data);
 
         // Los seteo en el estado global
-        console.log(adaptedData);
         setUserInfo(adaptedData);
-
-        // Guardar token en las cookies
+        // Guardar token en las cookies & LocalStorage
         Cookies.set('token', res?.data?.data?.token);
         Cookies.set('refresh', res?.data?.data?.refresh);
 
-        // Redirigimos al home Chavez vive y la lucha sigue
-        router.replace('/');
+        loginUI();
+
+        // Redirigimos al home con window para reiniciar el cache de las rutas
+        window.location.href = '/';
       })
       .catch((error: AxiosError) => {
         // Manejar el error

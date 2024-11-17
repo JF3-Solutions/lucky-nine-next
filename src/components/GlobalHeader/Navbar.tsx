@@ -1,111 +1,146 @@
-"use client"
-import {FC,useState,useEffect,useCallback} from 'react';
-import {FaArrowLeft} from 'react-icons/fa';
-import {RxHamburgerMenu} from 'react-icons/rx';
-import {IoClose} from 'react-icons/io5';
-import {usePathname} from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
+import { FaArrowLeft } from 'react-icons/fa';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { IoClose } from 'react-icons/io5';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Logo from '../Logo/Logo';
 import Balance from './balance';
-import ItemsMenu from './ItemsMenu';
 import ButtonNav from './ButtonNav';
+import Imagen from '../Imagen/Imagen';
+import NavbarSkeleton from './NavbarSkeleton';
+import { useUserInfoStore } from '@/store/useUserInfoStore';
 
-const NavBar: FC<{showBackButton?: boolean}>=({showBackButton}) => {
-    const [isMenuOpen,setIsMenuOpen]=useState(false);
-    const pathname: string=usePathname(); // Usamos usePathname para obtener la ruta actual
-    // Simular los valores de autenticación
-    const isAuthenticated=false; // Simula si el usuario está autenticado o no
-    const loading=false; // Simula el estado de carga
-    const userData={saldo: 1000}; // Simula los datos de usuario
+interface NavBarInterface {
+  isMenuOpen: boolean;
+  loading: boolean;
+  setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
+}
+const NavBar = ({ isMenuOpen, setIsMenuOpen, loading }: NavBarInterface) => {
+  const { isAuthenticated, logout, saldo } = useUserInfoStore();
 
-    const ItemUrl=isAuthenticated? [
-        {name: 'Inicio',href: '/dashboard'},
-        {name: 'Perfil',href: '/profile'},
-        {name: 'Pago Movil',href: '/add-to-bank'},
-        {name: 'Retiro',href: '/deposit-or-withdrawal'},
-        {name: 'Deposito',href: '/deposit-or-withdrawal'},
-        {name: 'Soporte',href: '/support'},
-        {
-            name: 'Cerrar sesión',href: '/auth/sign-in',onClick: () => {
-                console.log('Cerrar sesión');
-            }
-        },
-    ]
-        :[
-            {name: 'Iniciar sesión',href: '/sign-in'},
-            {name: 'Registrar cuenta',href: '/sign-up'},
-            {name: 'Soporte',href: '/support'},
-        ];
+  // Estado para saber si el menu esta abierto
+  const pathname: string = usePathname(); // Usamos usePathname para obtener la ruta actua
 
-    // Filtramos los elementos del menú según la ruta actual usando pathname
-    const filteredItems=ItemUrl.filter(item => pathname!==item.href);
+  const ItemUrl = isAuthenticated
+    ? [
+        { name: 'Inicio', href: '/' },
+        { name: 'Perfil', href: '/profile' },
+        { name: 'Pago Movil', href: '/wallet' },
+        { name: 'Retiros', href: '/withdrawals' },
+        { name: 'Depositos', href: '/deposits' },
+        { name: 'Soporte', href: '/support' },
+      ]
+    : [
+        { name: 'Inicio', href: '/' },
+        { name: 'Iniciar sesión', href: '/sign-in' },
+        { name: 'Registrar cuenta', href: '/sign-up' },
+        { name: 'Soporte', href: '/support' },
+      ];
 
-    const toggleMenu=() => {
-        setIsMenuOpen(!isMenuOpen);
-    };
+  // Filtramos los elementos del menú según la ruta actual usando pathname
+  const filteredItems = ItemUrl.filter((item) => pathname !== item.href);
 
-    const handleClickOutside=useCallback(
-        (event: MouseEvent) => {
-            const target=event.target as HTMLElement;
-            if(isMenuOpen&&!target.closest('.menu-container')&&!target.closest('.menu-icon')) {
-                setIsMenuOpen(false);
-            }
-        },
-        [isMenuOpen]
-    );
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
-    useEffect(() => {
-        document.addEventListener('mousedown',handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown',handleClickOutside);
-        };
-    },[handleClickOutside]);
+  //   Hooks
+  const router = useRouter();
 
-    if(loading) {
-        return <p>Cargando...</p>;
-    }
-
+  if (loading) {
     return (
-        <nav className="mx-4 w-full max-w-[1200px]">
-            <ul className="flex flex-row justify-between w-full items-center my-1">
-                {isAuthenticated? (
-                    <li className="flex mt-2">
-                        <Link href={'/'}>
-                            <Logo className="w-[6rem]" src={'/Logo/3.png'} alt={'Lucky9'} />
-                        </Link>
-                        {userData&&<Balance balance={userData.saldo} />}
-                    </li>
-                ):(
-                    showBackButton&&(
-                        <li>
-                            <ButtonNav onClick={() => window.history.back()} className="flex justify-center items-center w-10 bg-transparent">
-                                <FaArrowLeft className="text-blue-800" size={20} />
-                            </ButtonNav>
-                        </li>
-                    )
-                )}
-                <li className={`menu-icon ${isMenuOpen? 'transition-all duration-1000 rotate-360':'transition-all duration-1000 rotate-180'}`}>
-                    {isMenuOpen? (
-                        <IoClose className="text-gray-400 m-2 h-7 w-7" onClick={toggleMenu} />
-                    ):(
-                        <div className="flex justify-center items-center w-10 bg-transparent">
-                            <RxHamburgerMenu className="text-blue-800 m-2" size={28} onClick={toggleMenu} />
-                        </div>
-                    )}
-                </li>
-            </ul>
-
-            {isMenuOpen&&(
-                <div className="menu-container z-10 bg-black absolute p-2 top-14 right-0 border-2 border-t-0 w-1/2 xl:mr-24 border-blue-800 rounded-lg rounded-t-none">
-                    {filteredItems.map((item,index) => (
-                        <div key={index}>
-                            <ItemsMenu href={item.href} name={item.name} onClick={item.onClick} />
-                        </div>
-                    ))}
-                </div>
-            )}
-        </nav>
+      <nav className='flex w-full md:max-w-[80vw] px-6 justify-between items-center'>
+        <NavbarSkeleton />
+      </nav>
     );
+  }
+
+  return (
+    <nav className='w-full md:max-w-[80vw] px-6 relative z-[101]'>
+      <ul className='flex flex-row justify-between w-full items-center my-1'>
+        {pathname === '/' ? (
+          <li className='flex'>
+            <Link href={'/'} className='w-[100px]'>
+              <Imagen
+                className='w-full max-w-[100px] h-[40px]'
+                src={'/Logo/logo-md.png'}
+                alt={'Lucky9'}
+              />
+            </Link>
+            {isAuthenticated && <Balance balance={saldo} />}
+          </li>
+        ) : (
+          <li className='flex items-center'>
+            <ButtonNav
+              onClick={() => router.back()}
+              className='flex justify-center items-center w-10 bg-transparent lg:hidden'
+            >
+              <FaArrowLeft className='text-blue-800' size={20} />
+            </ButtonNav>
+            <Link href={'/'} className='w-[100px] hidden lg:block'>
+              <Imagen
+                className='w-full max-w-[100px] h-[40px]'
+                src={'/Logo/logo-md.png'}
+                alt={'Lucky9'}
+              />
+            </Link>
+            {isAuthenticated && <Balance balance={saldo} />}
+          </li>
+        )}
+        <li
+          className={`menu-icon ${
+            isMenuOpen
+              ? 'transition-all duration-400 rotate-360'
+              : 'transition-all duration-400 rotate-180'
+          }`}
+        >
+          {isMenuOpen ? (
+            <button
+              onClick={toggleMenu}
+              className='flex justify-center items-center w-10 bg-transparent z-[101]'
+            >
+              <IoClose className='text-gray-400 m-2 h-7 w-7' />
+            </button>
+          ) : (
+            <button
+              onClick={toggleMenu}
+              className='flex justify-center items-center w-10 bg-transparent z-[101]'
+            >
+              <RxHamburgerMenu className='text-blue-800 m-2' size={28} />
+            </button>
+          )}
+        </li>
+      </ul>
+
+      {isMenuOpen && (
+        <div className='flex flex-col gap-2 items-start z-10 bg-black-custom absolute p-2 top-[55px] right-0 border-2 border-t-0 w-full max-w-[270px] xl:mr-24 border-blue-800 rounded-lg rounded-t-none'>
+          {filteredItems.map((item, index) => (
+            <Link
+              key={index}
+              href={item.href}
+              className='w-full text-start text-gray-200 text-md px-2'
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {item.name}
+            </Link>
+          ))}
+
+          {/* Cerrar sesión */}
+          {isAuthenticated ? (
+            <button
+              className='w-full text-start text-gray-200 text-md px-2'
+              onClick={() => {
+                logout();
+                setIsMenuOpen(false);
+              }}
+            >
+              Cerrar sesión
+            </button>
+          ) : null}
+        </div>
+      )}
+    </nav>
+  );
 };
 
 export default NavBar;

@@ -1,9 +1,9 @@
-import {ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import LoginForm from './component/LoginForm';
 import PrimaryTitle from '@/components/PrimaryTitle/PrimaryTitle';
 import LuckyInfo from '@/components/LuckyInfo/LuckyInfo';
 
-const SignInPage=() => {
+const SignInPage = () => {
   return (
     <main className='min-h-[calc(100dvh-60px)] flex flex-col py-4 md:max-w-[80vw] md:flex-row md:mx-auto'>
       <ToastContainer
