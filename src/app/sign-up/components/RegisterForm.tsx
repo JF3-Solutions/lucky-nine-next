@@ -4,6 +4,7 @@ import PrimaryButton from "@/components/PrimaryButton/PrimaryButton";
 import InputPassword from "@/components/InputPassword/InputPassword";
 import {useRegisterForm} from "../hooks/useRegisterForm";
 import {isEmailValid} from "@/utilities/validation";
+import InputSelect from "@/components/InputSelect/InputSelect";
 
 const SignIn=() => {
     const {
@@ -11,38 +12,44 @@ const SignIn=() => {
         buttonLoading,
         emptyEmail,
         passwordErrors,
+        cedulaOptions,
+        handleNumberChange,
+        handlePrefixChange,
         handleChange,
         handleSubmit,
     }=useRegisterForm();
     console.log('Aqui enviamos los formularios :',useRegisterForm(),handleSubmit)
 
+
     return (
         <>
             <form
                 onSubmit={handleSubmit}
-                className="flex-1 flex flex-col w-full items-center md:max-w-[425px] px-6 py-6 justify-between md:gap-12"
+                className="flex-1 flex flex-col w-full items-center gap-12 md:max-w-[425px] px-6 py-6 justify-between md:gap-12"
             >
                 <div className="flex flex-col gap-4 md:mb-4 w-full md:max-w-[425px]">
+                    <div className="flex gap-4">
 
-                    {/* Campo de Nombre */}
-                    <InputText
-                        value={formData.name}
-                        handleChange={handleChange}
-                        type="text"
-                        name="name"
-                        required={true}
-                        label="Nombre"
-                    />
+                        {/* Campo de Nombre */}
+                        <InputText
+                            value={formData.name}
+                            handleChange={handleChange}
+                            type="text"
+                            name="name"
+                            required={true}
+                            label="Nombre"
+                        />
 
-                    {/* Campo de Apellido */}
-                    <InputText
-                        value={formData.lastName}
-                        handleChange={handleChange}
-                        type="text"
-                        name="lastName"
-                        required={true}
-                        label="Apellido"
-                    />
+                        {/* Campo de Apellido */}
+                        <InputText
+                            value={formData.lastName}
+                            handleChange={handleChange}
+                            type="text"
+                            name="lastName"
+                            required={true}
+                            label="Apellido"
+                        />
+                    </div>
 
                     {/* Campo de Username */}
                     <InputText
@@ -55,13 +62,14 @@ const SignIn=() => {
                     />
 
                     {/* Campo de Cedula de identidad */}
-                    <InputText
-                        value={formData.cedula}
-                        handleChange={handleChange}
-                        type="text"
+                    <InputSelect
                         name="cedula"
-                        label="Cedula"
-                        required={true}
+                        prefixValue={formData.cedulaPrefix}
+                        numberValue={formData.cedulaNumber}
+                        options={cedulaOptions}
+                        placeholder="Número de cédula"
+                        onPrefixChange={handlePrefixChange}
+                        onNumberChange={handleNumberChange}
                     />
 
                     {/* Campo de Correo Electrónico */}

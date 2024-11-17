@@ -11,7 +11,8 @@ interface RegisterForm {
     name: string,
     username: string,
     lastName: string,
-    cedula: string,
+    cedulaPrefix: string;
+    cedulaNumber: string;
     email: string,
     password: string,
     passwordConfirm: string,
@@ -24,13 +25,14 @@ export const useRegisterForm=() => {
 
     // -------------State------------//
     const [formData,setFormData]=useState<RegisterForm>({
-        name: 'Moises',
-        lastName: 'Navarro',
-        username: 'MernStack',
-        email: 'MoisesNavarroMendoza@hotmail.com',
-        cedula: '24685881',
-        password: 'ContraseñaFuerte.@2020',
-        passwordConfirm: 'ContraseñaFuerte.@2020',
+        name: '',
+        lastName: '',
+        username: '',
+        cedulaPrefix: "V",
+        cedulaNumber: "",
+        email: '',
+        password: '',
+        passwordConfirm: '',
     })
     console.log(formData)
 
@@ -51,12 +53,34 @@ export const useRegisterForm=() => {
     const validateInputLength: (value: string,maxLength: number) => boolean=(value: string,maxLength: number): boolean => {
         return value.length<=maxLength;
     };
+    const cedulaOptions=[
+        {value: "V",label: "V"},
+        {value: "E",label: "E"},
+        {value: "J",label: "J"},
+    ];
+
+
+    // Manejar cambio en el prefijo de la cédula
+    const handlePrefixChange=(e: ChangeEvent<HTMLSelectElement>) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            cedulaPrefix: e.target.value,
+        }));
+    };
+
+    // Manejar cambio en el número de cédula
+    const handleNumberChange=(e: ChangeEvent<HTMLInputElement>) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            cedulaNumber: e.target.value,
+        }));
+    };
 
     // Creamos una funcion para manipular los cambios de los inputs
-    const handleChange=(e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange=(e: ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
         const {name,value}=e.target;
 
-        if(name==="name"||name==="username"||name==="cedula"||name==="lastName") {
+        if(name==="name"||name==="username"||name==="lastName") {
             if(!validateInputLength(value,50)) return;
         } else if(name==="email") {
             if(!validateInputLength(value,250)) return;
@@ -69,6 +93,7 @@ export const useRegisterForm=() => {
             ...formData,
             [name]: value,
         });
+        console.log(setFormData)
 
     };
 
@@ -78,12 +103,14 @@ export const useRegisterForm=() => {
 
         //Creamos una copia de formData y excluimos passwordConfirm
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const {passwordConfirm,...dataToSend}=formData;
+        const {passwordConfirm,cedulaPrefix,cedulaNumber,...dataToSend}=formData;
 
+        // Agregar `cedula` combinando prefijo y número
+        const cedula=`${cedulaPrefix}-${cedulaNumber}`;
         // Activamos el Loading del boton mientras se realiza la peticion
         setButtonLoading(true);
         // Llamamos la peticion directamente desde register y le pasamos los parametros que vamos a enviar.
-        await register(dataToSend)
+        await register({...dataToSend,cedula})
             .then((res): void => {
                 // Manejamos la respuesta correcta
                 if(res.status===201) {
@@ -122,8 +149,11 @@ export const useRegisterForm=() => {
         emptyEmail,
         emptyPassword,
         passwordErrors,
+        cedulaOptions,
+        handlePrefixChange,
+        handleNumberChange,
         handleChange,
-        handleSubmit
+        handleSubmit,
 
     }
 
