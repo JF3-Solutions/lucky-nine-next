@@ -11,13 +11,11 @@ const layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang='en'>
-      <body className={`antialiased`}>
-        <header>Tu rifa menu</header>
-        {children}
-        <footer>Tu rifa footer</footer>
-      </body>
-    </html>
+    <aside className={`antialiased`}>
+      <header>Tu rifa menu</header>
+      {children}
+      <footer>Tu rifa footer</footer>
+    </aside>
   );
 };
 
