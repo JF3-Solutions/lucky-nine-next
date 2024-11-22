@@ -1,8 +1,7 @@
 export default async function Admin() {
-
-    return (
-        <>
-            <h1>Admin</h1>
-        </>
-    )
+  return (
+    <main>
+      <h1>Admin</h1>
+    </main>
+  );
 }
