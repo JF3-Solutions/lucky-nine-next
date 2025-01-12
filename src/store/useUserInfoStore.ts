@@ -1,8 +1,8 @@
-import {ROLES} from '@/models/Roles.enum';
-import {UsersInterface} from '@/models/User.interface';
-import {create} from 'zustand';
+import { ROLES } from '@/models/Roles.enum';
+import { UsersInterface } from '@/models/User.interface';
+import { create } from 'zustand';
 import Cookies from 'js-cookie';
-import {persist} from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
 // Define una interfaz para el estado
 interface UsersInterfaceGlobalState extends UsersInterface {
@@ -13,7 +13,7 @@ interface UsersInterfaceGlobalState extends UsersInterface {
 }
 
 // Usa el tipo en el store
-export const useUserInfoStore=create<UsersInterfaceGlobalState>()(
+export const useUserInfoStore = create<UsersInterfaceGlobalState>()(
   persist(
     (set) => ({
       // Estado inicial
@@ -70,7 +70,7 @@ export const useUserInfoStore=create<UsersInterfaceGlobalState>()(
         Cookies.remove('token');
         Cookies.remove('refresh');
         // Redirigimos al home con window para reiniciar el cache de todas las rutas
-        window.location.href='/';
+        window.location.href = '/';
       },
     }),
     {
