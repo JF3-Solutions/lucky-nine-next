@@ -4,7 +4,7 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import { IoClose } from 'react-icons/io5';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Balance from './balance';
+import Balance from './Balance';
 import ButtonNav from './ButtonNav';
 import Imagen from '../Imagen/Imagen';
 import NavbarSkeleton from './NavbarSkeleton';
@@ -24,17 +24,17 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen, loading }: NavBarInterface) => {
   const ItemUrl = isAuthenticated
     ? [
         { name: 'Inicio', href: '/' },
-        { name: 'Perfil', href: '/profile' },
-        { name: 'Pago Movil', href: '/wallet' },
-        { name: 'Retiros', href: '/withdrawals' },
-        { name: 'Depositos', href: '/deposits' },
-        { name: 'Soporte', href: '/support' },
+        // { name: 'Perfil', href: '/profile' },
+        // { name: 'Pago Movil', href: '/wallet' },
+        // { name: 'Retiros', href: '/withdrawals' },
+        // { name: 'Depositos', href: '/deposits' },
+        // {name: 'Soporte',href: '/support'},
       ]
     : [
         { name: 'Inicio', href: '/' },
         { name: 'Iniciar sesión', href: '/sign-in' },
         { name: 'Registrar cuenta', href: '/sign-up' },
-        { name: 'Soporte', href: '/support' },
+        // {name: 'Soporte',href: '/support'},
       ];
 
   // Filtramos los elementos del menú según la ruta actual usando pathname

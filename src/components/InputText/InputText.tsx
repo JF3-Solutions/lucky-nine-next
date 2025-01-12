@@ -6,8 +6,10 @@ interface InputProps {
   label: string;
   type: string;
   name: string;
-  error: boolean;
+  error?: boolean;
   required?: boolean;
+  placeholder?: string
+
   icon?: ReactNode;
 }
 
@@ -20,7 +22,7 @@ const InputText: FC<InputProps>=({
   required=false,
   icon,
   error,
-}) => {
+}: InputProps) => {
   return (
     <div className='relative w-full'>
       {icon? <div className='absolute right-3 top-3 text-blue-800'>{icon}</div>:null}
@@ -33,7 +35,7 @@ const InputText: FC<InputProps>=({
         {label}
       </label>
       <input
-        className={`w-full h-[44px] rounded bg-transparent text-[15px] text-gray-400 border-[1px] border-blue-800 outline-none focus:border-primary transition-all pl-2 pt-2 ${icon? 'pr-[45px]':''
+        className={`w-full h-[44px] rounded bg-transparent text-[15px] text-gray-400 border-[1px] border-blue-800 outline-none focus:border-primary transition-all px-2 pt-2 ${icon? 'pr-[45px]':''
           } ${error? 'border-error':'border-black-p'}`}
         type={type}
         name={name}

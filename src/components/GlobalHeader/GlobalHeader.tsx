@@ -61,7 +61,7 @@ const GlobalHeader = () => {
   }, []);
 
   return (
-    <header className='box-shadow border-b-2 z-50 border-blue-800 flex h-[60px] justify-center items-center gap-4 w-full bg-black-custom'>
+    <header className='box-shadow border-b-2 z-50 border-blue-800 flex h-[60px] justify-center items-center gap-4 w-full bg-black-custom fixed top-0 right-0'>
       {isMenuOpen ? (
         <div
           className='fixed w-[100vw] h-[100dvh] right-0 top-0 z-[100]'

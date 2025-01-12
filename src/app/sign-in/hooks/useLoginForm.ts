@@ -88,7 +88,7 @@ export const useLoginForm = () => {
           );
           // Guardamos el correo en el sessionStorage para utilizarlo en /resendCode
           sessionStorage.setItem('verify', formData.email);
-          router.push('/');
+          router.push('/verify');
         } else {
           // Mostrar toast con el mensaje de error.
           const message = (error.response?.data as { message: string })
