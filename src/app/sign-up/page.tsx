@@ -5,7 +5,7 @@ import RegisterForm from './components/RegisterForm';
 
 const SignIn = () => {
   return (
-    <main className='min-h-[calc(100dvh-60px)] flex flex-col py-4 md:max-w-[80vw] md:flex-row md:mx-auto'>
+    <main className='main-container'>
       <ToastContainer
         theme='colored'
         draggable

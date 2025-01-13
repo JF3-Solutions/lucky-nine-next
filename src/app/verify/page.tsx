@@ -5,7 +5,7 @@ import VerifyForm from './components/VerifyForm';
 
 const VerifyPage = () => {
   return (
-    <main className='min-h-[calc(100dvh-60px)] flex flex-col md:max-w-[80vw] md:mx-auto'>
+    <main className='min-h-[calc(100dvh-60px)] flex flex-col py-4 md:max-w-[80vw] md:flex-row md:mx-auto'>
       <ToastContainer
         theme='colored'
         draggable

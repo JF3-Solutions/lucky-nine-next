@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .main-container {
+    @apply min-h-[calc(100dvh-60px)] flex flex-col py-4 md:max-w-[80vw] md:flex-row md:mx-auto;
+  }
+}
+
 body {
   background-color: #02000e;
   color: #fff;
